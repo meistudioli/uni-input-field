@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Web Component: &lt;uni-input-field /> - a web component based on uniopen design language</title>
+<meta name="description" content="uni-input-field is an encapsulated Web Component built upon the foundation of the uniopen design language. Implementation is straightforward: simply slot a standard input element inside uni-input-field. The component instantly applies a user interface that aligns seamlessly with the uniopen design language guidelines. Furthermore, its visual styles can be dynamically adapted via native HTML attributes or JavaScript properties. The component also exposes comprehensive character count and input length metadata, providing users with a clear and intuitive understanding of predefined character constraints." />
+<script type="module" src="mjs/wc-uni-input-field.js"></script>
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/wc-base.css">
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/radio-set.css">
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/defaults.css">
+<style>
+#hd,#ft{display:none;}
+body{position:relative;inline-size:100vw;block-size:100vh;margin:0;}
+
+.wrap {
+  inline-size: 100%;
+  max-inline-size: min(800px, calc(100% - 2em));
+  box-sizing: border-box;
+}
+
+.demo-wrap {
+  position: relative;
+  inline-size: min(100%, 800px);
+  block-size: 160px;
+  background-color: rgba(var(--white));
+  margin: 6em auto 1em;
+  padding: 1.5em;
+  box-sizing: border-box;
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+
+  &+.setting-form {
+    --subject-inline-size: auto;
+    margin-block-start: 1em;
+  }
+
+  uni-input-field {
+    inline-size: 100%;
+  }
+}
+
+/* input */
+uni-input-field {
+  inline-size: 300px;
+
+  &::part(icon-subject) {
+    /* style icon here */
+  }
+
+  &[data-hide-icon]::part(icon-subject) {
+    display: none;
+  }
+}
+
+[inert] uni-input-field {
+  --interactivity: inert;
+}
+</style>
+</head>
+
+<body class="flex-center">
+<div class="wrap">
+  <div class="demo-wrap">
+    <uni-input-field subject="Subject" message="Supporting text">
+      <input
+        type="text"
+        slot="input"
+        placeholder="placeholder"
+        required
+        maxlength="30"
+      />
+    </uni-input-field>
+  </div>
+
+  <form class="setting-form">
+    <ul class="adjustments">
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">size：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="size-0" type="radio" name="size" value="large" />
+              <label class="radio-set__label" for="size-0"></label>
+            </div>
+
+            <label for="size-0">
+              large
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="size-1" type="radio" name="size" value="medium" checked />
+              <label class="radio-set__label" for="size-1"></label>
+            </div>
+
+            <label for="size-1">
+              medium
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="size-2" type="radio" name="size" value="small" />
+              <label class="radio-set__label" for="size-2"></label>
+            </div>
+
+            <label for="size-2">
+              small
+            </label>
+          </div>
+        </div>
+      </li>
+
+
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">appearance：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="appearance-0" type="radio" name="appearance" value="filled" checked />
+              <label class="radio-set__label" for="appearance-0"></label>
+            </div>
+
+            <label for="appearance-0">
+              filled
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="appearance-1" type="radio" name="appearance" value="outlined" />
+              <label class="radio-set__label" for="appearance-1"></label>
+            </div>
+
+            <label for="appearance-1">
+              outlined
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">stat：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="stat-0" type="radio" name="stat" value="normal" checked />
+              <label class="radio-set__label" for="stat-0"></label>
+            </div>
+
+            <label for="stat-0">
+              normal
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="stat-1" type="radio" name="stat" value="valid" />
+              <label class="radio-set__label" for="stat-1"></label>
+            </div>
+
+            <label for="stat-1">
+              valid
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="stat-2" type="radio" name="stat" value="invalid" />
+              <label class="radio-set__label" for="stat-2"></label>
+            </div>
+
+            <label for="stat-2">
+              invalid
+            </label>
+          </div>
+
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">subject：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="subject-0" type="radio" name="subject" value="show" checked />
+              <label class="radio-set__label" for="subject-0"></label>
+            </div>
+
+            <label for="subject-0">
+              show
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="subject-1" type="radio" name="subject" value="hide" />
+              <label class="radio-set__label" for="subject-1"></label>
+            </div>
+
+            <label for="subject-1">
+              hide
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">subject icon：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="subject-icon-0" type="radio" name="icon" value="show" checked />
+              <label class="radio-set__label" for="subject-icon-0"></label>
+            </div>
+
+            <label for="subject-icon-0">
+              show
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="subject-icon-1" type="radio" name="icon" value="hide" />
+              <label class="radio-set__label" for="subject-icon-1"></label>
+            </div>
+
+            <label for="subject-icon-1">
+              hide
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">message：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="message-0" type="radio" name="message" value="show" checked />
+              <label class="radio-set__label" for="message-0"></label>
+            </div>
+
+            <label for="message-0">
+              show
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="message-1" type="radio" name="message" value="hide" />
+              <label class="radio-set__label" for="message-1"></label>
+            </div>
+
+            <label for="message-1">
+              hide
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">counter：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="counter-0" type="radio" name="counter" value="show" checked />
+              <label class="radio-set__label" for="counter-0"></label>
+            </div>
+
+            <label for="counter-0">
+              show
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="counter-1" type="radio" name="counter" value="hide" />
+              <label class="radio-set__label" for="counter-1"></label>
+            </div>
+
+            <label for="counter-1">
+              hide
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">required：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="required-0" type="radio" name="required" value="y" checked />
+              <label class="radio-set__label" for="required-0"></label>
+            </div>
+
+            <label for="required-0">
+              yes
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="required-1" type="radio" name="required" value="n" />
+              <label class="radio-set__label" for="required-1"></label>
+            </div>
+
+            <label for="required-1">
+              no
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">disabled：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="disabled-0" type="radio" name="disabled" value="y" />
+              <label class="radio-set__label" for="disabled-0"></label>
+            </div>
+
+            <label for="disabled-0">
+              yes
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="disabled-1" type="radio" name="disabled" value="n" checked />
+              <label class="radio-set__label" for="disabled-1"></label>
+            </div>
+
+            <label for="disabled-1">
+              no
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">readonly：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="readonly-0" type="radio" name="readonly" value="y" />
+              <label class="radio-set__label" for="readonly-0"></label>
+            </div>
+
+            <label for="readonly-0">
+              yes
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="readonly-1" type="radio" name="readonly" value="n" checked />
+              <label class="radio-set__label" for="readonly-1"></label>
+            </div>
+
+            <label for="readonly-1">
+              no
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">input type</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="type-0" type="radio" name="type" value="text" checked />
+              <label class="radio-set__label" for="type-0"></label>
+            </div>
+
+            <label for="type-0">
+              text
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="type-1" type="radio" name="type" value="datetime-local" />
+              <label class="radio-set__label" for="type-1"></label>
+            </div>
+
+            <label for="type-1">
+              datetime
+            </label>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>
+
+<script type="module">
+await customElements.whenDefined('uni-input-field');
+
+const wrap = document.querySelector('.demo-wrap');
+const uniInputField = document.querySelector('.demo-wrap uni-input-field');
+const input = uniInputField.querySelector('input');
+const form = document.querySelector('.setting-form');
+
+const handler = (evt) => {
+  const { target } = evt;
+  const formData = new FormData(form);
+  const fd = Object.fromEntries(formData.entries());
+
+  switch (target.name) {
+    case 'size': {
+      uniInputField.size = fd['size'];
+      break;
+    }
+
+    case 'appearance': {
+      uniInputField.appearance = fd['appearance'];
+      break;
+    }
+
+    case 'stat': {
+      uniInputField.stat = fd['stat'] === 'normal' ? '' : fd['stat'];
+      break;
+    }
+
+    case 'subject': {
+      uniInputField.subject = fd['subject'] === 'show' ? 'Subject' : '';
+      break;
+    }
+
+    case 'message': {
+      uniInputField.message = fd['message'] === 'show' ? 'Supporting text' : '';
+      break;
+    }
+    
+    case 'counter': {
+      if (fd['counter'] === 'show') {
+        input.maxLength = 30;
+      } else {
+        input.removeAttribute('maxlength');
+      }
+
+      uniInputField.refresh();
+      break;
+    }
+
+    case 'required': {
+      input.required = fd['required'] === 'y';
+
+      uniInputField.refresh();
+      break;
+    }
+
+    case 'disabled': {
+      input.disabled = fd['disabled'] === 'y';
+
+      uniInputField.refresh();
+      break;
+    }
+
+    case 'readonly': {
+      input.readOnly = fd['readonly'] === 'y';
+
+      uniInputField.refresh();
+      break;
+    }
+
+    case 'type': {
+      input.type = fd['type'];
+
+      if (fd['type'] === 'text') {
+        input.type = 'text';
+
+        if (fd['counter'] === 'show') {
+          input.maxLength = 30;
+        } else {
+          input.removeAttribute('maxlength');
+        }
+      } else {
+        input.removeAttribute('maxlength');
+      }
+
+      uniInputField.refresh();
+      break;
+    }
+
+    case 'icon': {
+      uniInputField.toggleAttribute('data-hide-icon', fd['icon'] === 'hide')
+      break;
+    }
+  }
+};
+
+form.addEventListener('input', handler);
+</script>
+
+</body>
+
+</html>
