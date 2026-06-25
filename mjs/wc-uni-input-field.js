@@ -514,16 +514,6 @@ export class UniInputField extends HTMLElement {
     return this.#config.size;
   }
 
-  #fireEvent(evtName, detail) {
-    this.dispatchEvent(new CustomEvent(evtName,
-      {
-        bubbles: true,
-        composed: true,
-        ...(detail && { detail })
-      }
-    ));
-  }
-
   _onInput(evt) {
     const { input, counter } = this.#nodes;
 
