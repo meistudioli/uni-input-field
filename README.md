@@ -46,7 +46,8 @@ The component also exposes comprehensive character count and input length metada
   <input
     slot="input"
     type="text"
-    placeholder="placeholder"
+    readonly
+    required
   />
 </uni-input-field>
 ```
