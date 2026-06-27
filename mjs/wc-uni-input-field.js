@@ -243,7 +243,7 @@ ${_uniColorPalette}
 
   slot[name=input] {
     inline-size: 100%;
-    display: block
+    display: block;
   }
 
   /* input */
@@ -309,7 +309,8 @@ export class UniInputField extends HTMLElement {
 
     // data
     this.#data = {
-      controller: ''
+      controller: '',
+      elementController: ''
     };
 
     // nodes
@@ -319,6 +320,7 @@ export class UniInputField extends HTMLElement {
       subject: this.shadowRoot.querySelector('.main__subject__span'),
       message: this.shadowRoot.querySelector('.main__info__message'),
       counter: this.shadowRoot.querySelector('.main__info__counter'),
+      slot: this.shadowRoot.querySelector('slot[name=input]'),
     };
 
     // config
@@ -330,11 +332,12 @@ export class UniInputField extends HTMLElement {
     // evts
     this._onInput = this._onInput.bind(this);
     this._onKeydown = this._onKeydown.bind(this);
+    this._onSlotchange = this._onSlotchange.bind(this);
   }
 
   async connectedCallback() {
     const { config, error } = await _wcl.getWCConfig(this);
-    const { input } = this.#nodes;
+    const { slot } = this.#nodes;
 
     if (error) {
       console.warn(`${_wcl.classToTagName(this.constructor.name)}: ${error}`);
@@ -353,17 +356,14 @@ export class UniInputField extends HTMLElement {
     // evts
     this.#data.controller = new AbortController();
     const signal = this.#data.controller.signal;
-    input.addEventListener('input', this._onInput, { signal });
-    input.addEventListener('keydown', this._onKeydown, { signal });
-
-    // init
-    this._onInput();
+    slot.addEventListener('slotchange', this._onSlotchange, { signal });
+    
+    this.#setupEventListeners();
   }
 
   disconnectedCallback() {
-    if (this.#data?.controller) {
-      this.#data.controller.abort();
-    }
+    this.#data.controller.abort?.();
+    this.#data.elementController.abort?.();
   }
 
   #format(attrName, oldValue, newValue) {
@@ -454,6 +454,24 @@ export class UniInputField extends HTMLElement {
     }
   }
 
+  #setupEventListeners() {
+    if (this.#data.elementController) {
+      this.#data.elementController.abort();
+    }
+
+    this.#nodes.input = this.querySelector('[slot=input]');
+
+    if (this.#nodes.input) {
+      this.#data.elementController = new AbortController();
+      const signal = this.#data.elementController.signal;
+      
+      this.#nodes.input.addEventListener('input', this._onInput, { signal });
+      this.#nodes.input.addEventListener('keydown', this._onKeydown, { signal });
+
+      this._onInput();
+    }
+  }
+
   set subject(value) {
     if (value) {
       this.setAttribute('subject', value);
@@ -531,6 +549,10 @@ export class UniInputField extends HTMLElement {
     if (key === 'Enter' && isComposing) {
       event.preventDefault();
     }
+  }
+
+  _onSlotchange() {
+    this.#setupEventListeners();
   }
 
   refresh() {
