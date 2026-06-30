@@ -85,34 +85,15 @@ ${_uniColorPalette}
 }
 
 :host {
-  &:has([slot="input"][required]) {
-    .main__subject__span::after {
-      content: '*';
-      color: var(--ct_icon_moderate_strong);
-      margin-inline-start: 4px;
+  @container style(--show-required-sign: 'true') {
+    .main {
+      --required-sign-display: inline;
     }
   }
 
-  &:has([slot="input"][maxlength]) {
+  @container style(--show-counter: 'true') {
     .main {
       --counter-display: block;
-    }
-  }
-
-  &:has([slot="input"][readonly]) {
-    .main {
-      --background-color: transparent;
-      --border-color: var(--border-color-readonly);
-    }
-  }
-
-  &:has([slot="input"][disabled],[slot="input"][inert]) {
-    .main {
-      --text-color: var(--text-color-disabled);
-    }
-
-    slot[name="input"] {
-      interactivity: inert;
     }
   }
 
@@ -161,6 +142,8 @@ ${_uniColorPalette}
   --counter-color: var(--uni-input-field-counter-color, var(--ct_text_main_subtle));
   --caret-color: var(--uni-input-field-caret-color, var(--ct_input-caret_main_general));
 
+  --required-sign-display: none;
+
   /* size */
   --large-border-radius: 24px;
   --large-padding-inline: 16px 12px;
@@ -194,6 +177,13 @@ ${_uniColorPalette}
       font-size: 12px;
       color: var(--subject-color);
       line-height: 1.667;
+
+      &::after {
+        content: '*';
+        color: var(--ct_icon_moderate_strong);
+        margin-inline-start: 4px;
+        display: var(--required-sign-display);
+      }
     }
 
     em {
@@ -276,6 +266,15 @@ ${_uniColorPalette}
     }
   }
 
+  ::slotted(input[readonly]) {
+    --background-color: transparent;
+    --border-color: var(--border-color-readonly);
+  }
+
+  ::slotted(input:is([disabled],[inert])) {
+    --text-color: var(--text-color-disabled);
+  }
+
   ::slotted(input:is([type=date],[type=month],[type=time],[type=week],[type=datetime-local])) {
     --display: block;
   }
@@ -294,6 +293,40 @@ ${_uniColorPalette}
   </div>
 </div>
 `;
+
+/* style injection */
+const styleInjection = `
+uni-input-field {
+  --show-required-sign: 'false';
+  --show-counter: 'false';
+
+  &:has(input[required]) {
+    --show-required-sign: 'true';
+  }
+
+  &:not([data-hide-counter]):has(input[maxlength]) {
+    --show-counter: 'true';
+  }
+}
+
+[inert] uni-input-field {
+  --interactivity: inert;
+}
+`;
+
+const INJECT_KEY = Symbol.for('uni.input.field.ui.injected');
+const uiInit = () => {
+  if (window[INJECT_KEY]) {
+    return;
+  }
+
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(styleInjection);
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+
+  window[INJECT_KEY] = true;
+};
+uiInit();
 
 export class UniInputField extends HTMLElement {
   #data;
@@ -455,9 +488,7 @@ export class UniInputField extends HTMLElement {
   }
 
   #setupEventListeners() {
-    if (this.#data.elementController) {
-      this.#data.elementController.abort();
-    }
+    this.#data.elementController.abort?.();
 
     this.#nodes.input = this.querySelector('[slot=input]');
 

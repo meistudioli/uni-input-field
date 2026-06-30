@@ -42,8 +42,6 @@ body{position:relative;inline-size:100vw;block-size:100vh;margin:0;}
 
 /* input */
 uni-input-field {
-  inline-size: 300px;
-
   &::part(icon-subject) {
     /* style icon here */
   }
@@ -51,10 +49,6 @@ uni-input-field {
   &[data-hide-icon]::part(icon-subject) {
     display: none;
   }
-}
-
-[inert] uni-input-field {
-  --interactivity: inert;
 }
 </style>
 </head>
@@ -445,29 +439,21 @@ const handler = (evt) => {
       } else {
         input.removeAttribute('maxlength');
       }
-
-      uniInputField.refresh();
       break;
     }
 
     case 'required': {
       input.required = fd['required'] === 'y';
-
-      uniInputField.refresh();
       break;
     }
 
     case 'disabled': {
       input.disabled = fd['disabled'] === 'y';
-
-      uniInputField.refresh();
       break;
     }
 
     case 'readonly': {
       input.readOnly = fd['readonly'] === 'y';
-
-      uniInputField.refresh();
       break;
     }
 
@@ -485,8 +471,6 @@ const handler = (evt) => {
       } else {
         input.removeAttribute('maxlength');
       }
-
-      uniInputField.refresh();
       break;
     }
 
