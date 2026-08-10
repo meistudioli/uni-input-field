@@ -281,7 +281,7 @@ ${_uniColorPalette}
 }
 </style>
 
-<div class="main" ontouchstart="" tabindex="0">
+<div class="main" ontouchstart="">
   <p class="main__subject">
     <em part="icon-subject"></em>
     <span class="main__subject__span"></span>
@@ -337,7 +337,7 @@ export class UniInputField extends HTMLElement {
     super();
 
     // template
-    this.attachShadow({ mode: 'open', delegatesFocus: true });
+    this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     // data

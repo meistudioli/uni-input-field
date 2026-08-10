@@ -1,6 +1,6 @@
 {
   "name": "uni-input-field",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "<uni-input-field /> is an encapsulated Web Component built upon the foundation of the uniopen design language. Implementation is straightforward: simply slot a standard input element inside <uni-input-field />. The component instantly applies a user interface that aligns seamlessly with the uniopen design language guidelines. Furthermore, its visual styles can be dynamically adapted via native HTML attributes or JavaScript properties. The component also exposes comprehensive character count and input length metadata, providing users with a clear and intuitive understanding of predefined character constraints.",
   "keywords": [
     "web"
