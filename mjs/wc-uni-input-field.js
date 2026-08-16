@@ -251,10 +251,10 @@ ${_uniColorPalette}
     font-size: 16px;
     line-height: 1.4;
     color: var(--text-color);
-    inline-size: 100% !important;
+    inline-size: 100%;
     block-size: var(--block-size);
     box-sizing: border-box;
-    padding-inline: var(--padding-inline) !important;
+    padding-inline: var(--padding-inline);
     text-overflow: ellipsis;
     border: 1px solid var(--border-color);
     background-color: var(--background-color);
@@ -306,6 +306,33 @@ uni-input-field {
 
   &:not([data-hide-counter]):has(input[maxlength]) {
     --show-counter: 'true';
+  }
+
+  [slot="input"] {
+    outline: 0 none;
+    resize: none;
+    appearance: none;
+    box-shadow: none;
+
+    display: var(--display);
+    align-items: center;
+
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--text-color);
+    inline-size: 100%;
+    block-size: var(--block-size);
+    box-sizing: border-box;
+    padding-inline: var(--padding-inline);
+    text-overflow: ellipsis;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    caret-color: var(--caret-color);
+
+    &::placeholder {
+      color: var(--placeholder-color);
+    }
   }
 }
 
